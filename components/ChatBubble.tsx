@@ -8,6 +8,7 @@ export type ChatBubbleProps = TChat & {
 export default function ChatBubble({
   message,
   username,
+  createdAt,
   position = "left",
 }: ChatBubbleProps) {
   return (
@@ -32,6 +33,19 @@ export default function ChatBubble({
         {username}
       </Text>
       <Text>{message}</Text>
+      <Text
+        style={{
+          fontSize: 10,
+          color: "rgba(0, 0, 0, 0.4)",
+          textAlign: "right",
+          marginTop: 8,
+        }}
+      >
+        {new Date(createdAt).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </Text>
     </View>
   );
 }

@@ -34,7 +34,7 @@ export default function TabOneScreen() {
   const [history, setHistory] = useState<TChat[]>([
     {
       message: "Hey everyone! How's it going?",
-      createdAt: "2021-09-01T12:00:00Z",
+      createdAt: "2021-08-029T12:00:00Z",
       ...users[0],
     },
     {
@@ -85,7 +85,7 @@ export default function TabOneScreen() {
     },
     {
       message: "No answer? really??",
-      createdAt: "2021-09-01T12:58:00Z",
+      createdAt: "2021-09-02T12:58:00Z",
       ...users[0],
     },
   ]);
