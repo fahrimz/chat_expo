@@ -1,86 +1,12 @@
-import {
-  Animated,
-  FlatList,
-  StyleSheet,
-  ViewStyle,
-} from "react-native";
+import { Animated, StyleSheet } from "react-native";
 
 import { Text, View } from "@/components/Themed";
 import Separator from "@/components/Separator";
 import ChatInput from "@/components/ChatInput";
-import { forwardRef, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-
-type TUser = {
-  userId: string;
-  username: string;
-};
-
-type TChat = TUser & {
-  message: string;
-  createdAt: string;
-};
-
-type ChatBubbleProps = TChat & {
-  position?: "left" | "right";
-};
-
-function ChatBubble({ message, username, position = "left" }: ChatBubbleProps) {
-  return (
-    <View
-      style={{
-        padding: 12,
-        borderRadius: 12,
-        backgroundColor: "rgba(0,0,0,0.05)",
-        alignSelf: position === "left" ? "flex-start" : "flex-end",
-        gap: 4,
-        maxWidth: "80%",
-        borderBottomRightRadius: position === "right" ? 0 : 12,
-        borderBottomLeftRadius: position === "left" ? 0 : 12,
-      }}
-    >
-      <Text
-        style={{
-          fontWeight: "bold",
-          color: position === "right" ? "skyblue" : "black",
-        }}
-      >
-        {username}
-      </Text>
-      <Text>{message}</Text>
-    </View>
-  );
-}
-
-const ChatHistory = forwardRef<
-  FlatList,
-  {
-    currentUserId: string;
-    history: TChat[];
-    style: ViewStyle;
-  }
->(({ currentUserId, history, style }, ref) => {
-  const sortedHistory = history.sort(
-    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-  );
-
-  return (
-    <Animated.FlatList
-      ref={ref}
-      data={sortedHistory}
-      inverted
-      style={{ flex: 1 }}
-      contentContainerStyle={[{ gap: 12 }, style]}
-      renderItem={({ item }) => (
-        <ChatBubble
-          {...item}
-          position={item.userId === currentUserId ? "right" : "left"}
-        />
-      )}
-      keyExtractor={(_, index) => index.toString()}
-    />
-  );
-});
+import { TChat, TUser } from "@/constants/types";
+import ChatHistory from "@/components/ChatHistory";
 
 export default function TabOneScreen() {
   const showNotice = useRef(new Animated.Value(1)).current;
@@ -89,7 +15,7 @@ export default function TabOneScreen() {
     outputRange: [-120, 0],
   });
 
-  const flatListRef = useRef<FlatList>(null);
+  const flatListRef = useRef<Animated.FlatList>(null);
   const users: TUser[] = [
     { userId: "user1", username: "Alice" },
     { userId: "user2", username: "Bob" },
